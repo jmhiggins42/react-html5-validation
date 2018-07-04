@@ -11,7 +11,8 @@ class App extends React.Component {
         people: [],
         pass: '',
         confirmPass: ''
-      }
+      },
+      errorMessages: {}
     };
 
     this.formEl = React.createRef();
@@ -67,7 +68,7 @@ class App extends React.Component {
         const elem = formEl[i];
 
         // Custom Message Example
-        if (elem.name === 'password') {
+        if (elem.name === 'pass') {
           elem.setCustomValidity(
             elem.validity.patternMismatch
               ? 'Password must be at least 6 characters long and contain one number'
@@ -102,10 +103,10 @@ class App extends React.Component {
         const input = formEl[i];
 
         // NOTE: Validation only works if input tags have name attributes
-        // NOTE: for arrays inputs, names take the form of [arrayName]-[propName]-[index]
-        // Stores inpupt's validation message in errorMessages object
+        // NOTE: for arrays inputs, names take the form of [arrayName]-[index]-[propName]
+        // Stores input's validation message in errorMessages object
         if (input.name) {
-          const [mainName, propName, index] = input.name.split('-');
+          const [mainName, index, propName] = input.name.split('-');
           if (propName) {
             if (
               !errorMessages[mainName] ||
@@ -181,8 +182,9 @@ class App extends React.Component {
         <div className="row">
           <div className="col">
             <form
+              ref={this.formEl}
               className={hasBeenValidated ? 'was-validated' : ''}
-              onSubmit={this.onSubmit}
+              onSubmit={this.submitHandler}
               noValidate
             >
               <div className="form-group">
@@ -212,8 +214,8 @@ class App extends React.Component {
                 />
                 {this.renderErrorMsgs('value2')}
               </div>
-              <section>{/* tags here */}</section>
-              <section>{/* people here */}</section>
+              <section>{/* TODO: tags here */}</section>
+              <section>{/* TODO: people here */}</section>
               <div className="form-group">
                 <label htmlFor="pass">Password</label>
                 <input
@@ -243,7 +245,7 @@ class App extends React.Component {
                 {this.renderErrorMsgs('confirmPass')}
               </div>
               <div className="form-group">
-                <button type="submit" onClick={this.onSubmit}>
+                <button type="submit" onClick={this.submitHandler}>
                   Submit
                 </button>
               </div>

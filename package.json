@@ -1,6 +1,6 @@
 {
   "name": "react-html5-validation",
-  "version": "0.1.0",
+  "version": "0.5.0",
   "private": true,
   "dependencies": {
     "react": "^16.4.1",
